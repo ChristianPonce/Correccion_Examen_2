@@ -21,33 +21,47 @@ public class TestJubilado {
                 entrada.nextLine();
                 System.out.print("Cedula: ");
                 cedula = entrada.nextLine();
-                System.out.print("Nombres: ");
+                System.out.print("Nombre: ");
                 nombres = entrada.nextLine();
-                System.out.print("Anios Aporte:  ");
+                System.out.print("Anios de Aportacion:  ");
                 anios = entrada.nextInt();
                 datos(op, cedula, nombres, anios);
-                
             }
             if(op==4){
-                for(Jubilado jub:jubilados){
+                System.out.println("Datos de jubulacion patronal:\n");
+                for (Jubilado jub : jubilados) {
                     jub.calculaPensioni();
                     jub.calcularPension();
-                    if(jub instanceof JubiladoPatron){
+                    if (jub instanceof JubiladoPatron) {
                         ((JubiladoPatron) jub).bonoSueldo();
+                        System.out.println(jub);
+                    } 
+                }
+                System.out.println("Datos de jubilados por Discapacidad:\n");
+                for (Jubilado jub : jubilados) {
+                    jub.calculaPensioni();
+                    jub.calcularPension();
+                    if (jub instanceof JubiladoDiscapacidad) {
+                        System.out.println(jub);
                     }
-                    System.out.println(jub);
+                }
+                System.out.println("Datos de jubilados por vejez:\n");
+                for (Jubilado jub : jubilados) {
+                    jub.calculaPensioni();
+                    jub.calcularPension();
+                    if (jub instanceof JubiladoVejez) {
+                        System.out.println(jub);
+                    }
                 }
             }
         } while (op != 5);
     }
-
     public static int menu(int op) {
-        System.out.println("Menu Jubilado");
-        System.out.print("1. Vejez\n2. Invalidez\n3. Patronal\n4. Reporte\n5. Salir\nEscoja una Opcion. ");
+        System.out.println("    Menu de Jubilados (IESS)");
+        System.out.print("1. Vejez\n2. Invalidez\n3. Patronal\n4. Reporte\n5. Salir\n Elija una opcion: ");
         op = entrada.nextInt();
         return op;
     }
-
     public static void datos(int op, String cedula, String nombres, int anios) {
         double porcentaje;
         int tipo;
@@ -56,14 +70,14 @@ public class TestJubilado {
                 jubilados.add(new JubiladoVejez(cedula, nombres, anios));                
                 break;
             case 2:
-                System.out.print("Porcentaje de discapacidad: ");
+                System.out.print("Porcentaje de Discapacidad: ");
                 porcentaje = entrada.nextDouble();
                 jubilados.add(new JubiladoDiscapacidad(cedula, nombres, anios, porcentaje));
                 break;
             case 3:
                 System.out.print("Porcentaje de Inflacion: ");
                 porcentaje = entrada.nextDouble();
-                System.out.print("Tipo Empresa <<1>> publica <<2>> privada ");
+                System.out.print("Tipo de Empresa publica <<1>>  privada <<2>> ");
                 tipo = entrada.nextInt();
                 jubilados.add(new JubiladoPatron(cedula, nombres, anios, porcentaje, tipo));
         }
